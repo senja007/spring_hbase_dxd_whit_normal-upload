@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.http.client.fluent.Request;
-import org.json.JSONArray;
-import org.json.JSONObject;
+//import org.json.JSONArray;
+//import org.json.JSONObject;
 
 import com.github.javafaker.Faker;
 import com.ternak.sapi.property.FileStorageProperties;
@@ -33,6 +33,7 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 public class SeederData implements CommandLineRunner{
     
