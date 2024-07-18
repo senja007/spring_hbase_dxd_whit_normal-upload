@@ -20,6 +20,7 @@ public class HBaseCustomClient {
 
     private HBaseAdmin admin;
     private Connection connection = null;
+    
 
     public HBaseCustomClient(Configuration conf) throws IOException {
         connection = ConnectionFactory.createConnection(conf);
@@ -95,6 +96,28 @@ public class HBaseCustomClient {
             e.printStackTrace();
         }
 
+    }
+    
+    public List<String> getAllRecords(String tableName, String family, String qualifier) {
+        List<String> resultValues = new ArrayList<>();
+        try {
+            Table table = connection.getTable(TableName.valueOf(tableName));
+            Scan scan = new Scan();
+            scan.addColumn(Bytes.toBytes(family), Bytes.toBytes(qualifier));
+            ResultScanner scanner = table.getScanner(scan);
+            for (Result result : scanner) {
+                for (Cell cell : result.listCells()) {
+                    byte[] value = CellUtil.cloneValue(cell);
+                    if (value != null) {
+                        resultValues.add(Bytes.toString(value));
+                    }
+                }
+            }
+            table.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultValues;
     }
 
     public <T> void showTable(String tablename, Map<String, String> columnMapping, Class<T> modelClass) {
